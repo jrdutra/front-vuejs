@@ -1,1 +1,0 @@
-<span>Excluindo fornecedor!</span>

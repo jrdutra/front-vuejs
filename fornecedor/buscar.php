@@ -47,8 +47,8 @@
                             <strong>Endereço:</strong>
                             {{fornecedor.endereco}}
                         </p>
-                        <a v-on:click="idExclusao=fornecedor.id" data-toggle="modal" data-target="#exampleModal" class="btn btn-danger text-white">Excluir</a>
-                        <a class="btn btn-primary  text-white">Alterar</a>
+                        <a v-on:click="idExclusao=fornecedor.id" data-toggle="modal" data-target="#modalExcluir" class="btn btn-danger text-white">Excluir</a>
+                        <a class="btn btn-primary  text-white" data-toggle="modal" data-target="#modalAlterar">Alterar</a>
                     </div>
                 </div>  
             </transition-group>
@@ -64,7 +64,7 @@
             Modal confirmar exclusão
             =========================
         -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="modalExcluir" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -86,6 +86,36 @@
         <!-- 
         ==============================
          Fim Modal confirmar exclusão
+        ==============================
+        -->
+
+        <!-- 
+            =========================
+            Modal Alterar Fornecedor
+            =========================
+        -->
+        <div class="modal fade" id="modalAlterar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Alterar fornecedor</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Alterar Fornecedor!!!
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Descartar</button>
+                        <button type="button" class="btn btn-success" data-dismiss="modal">Salvar Alterações</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 
+        ==============================
+         Fim Modal Alterar fornecedor
         ==============================
         -->
 </div>
