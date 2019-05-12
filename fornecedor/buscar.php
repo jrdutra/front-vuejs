@@ -48,7 +48,7 @@
                             {{fornecedor.endereco}}
                         </p>
                         <a v-on:click="idExclusao=fornecedor.id" data-toggle="modal" data-target="#modalExcluir" class="btn btn-danger text-white">Excluir</a>
-                        <a class="btn btn-primary  text-white" data-toggle="modal" data-target="#modalAlterar">Alterar</a>
+                        <a v-on:click="alterarFornecedor(fornecedor)" class="btn btn-primary  text-white" data-toggle="modal" data-target="#modalAlterar">Alterar</a>
                     </div>
                 </div>  
             </transition-group>
@@ -167,6 +167,9 @@
                     return obj.id !== vm.idExclusao;
                 });
                 return arr;
+            },
+            alterarFornecedor(f){
+                console.log(f);
             }
         }
     }
@@ -178,6 +181,7 @@
           fornecedores: [],
           erros:[],
           idExclusao: "",
+          fornecedorAlterar: "",
         }
     });
 </script>
