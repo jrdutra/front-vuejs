@@ -104,11 +104,38 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        Alterar Fornecedor!!!
+                        <!-- INPUT NOME-->
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="idlblnome">Nome</span>
+                            </div>
+                                <input v-model="fornecedorAlterar.nome" type="text" class="form-control" id="idtxtNome" aria-describedby="basic-addon3">
+                        </div>
+                        <!-- INPUT CNPJ-->
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="idlblCnpj">CNPJ</span>
+                            </div>
+                                <input v-model="fornecedorAlterar.cnpj" type="text" class="form-control" id="idtxtCnpj" aria-describedby="basic-addon3">
+                        </div>
+                        <!-- INPUT Telefone-->
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="idlblTelefone">Telefone</span>
+                            </div>
+                                <input  v-model="fornecedorAlterar.telefone" type="text" class="form-control" id="idtxtTelefone" aria-describedby="basic-addon3">
+                        </div>
+                        <!-- INPUT Endereço-->
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="idlblEndereco">Endereço</span>
+                            </div>
+                                <input  v-model="fornecedorAlterar.endereco" type="text" class="form-control" id="idtxtEndereco" aria-describedby="basic-addon3">
+                        </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Descartar</button>
-                        <button type="button" class="btn btn-success" data-dismiss="modal">Salvar Alterações</button>
+                        <button v-on:click="descartarAlteracoesFornecedor()" type="button" class="btn btn-secondary" data-dismiss="modal">Descartar</button>
+                        <button v-on:click="salvarAlteracaoFornecedor()" type="button" class="btn btn-success" data-dismiss="modal">Salvar Alterações</button>
                     </div>
                 </div>
             </div>
@@ -156,7 +183,7 @@
                 }).catch(function (error) {
                         vm.erros = error.response.data.errors;
                         vm.fornecedores = [];
-                        console.log(error.response.data.errors);
+                        
                 }).finally(function () {
                     
                 });
@@ -169,7 +196,24 @@
                 return arr;
             },
             alterarFornecedor(f){
-                console.log(f);
+                this.fornecedorAlterar = f;
+                this.fornecedorAlterarAux = f;
+            },
+            salvarAlteracaoFornecedor(){
+                var vm = this;
+                var url = 'http://' + host + ':8089/api/fornecedor/atualizar/' + this.fornecedorAlterar.id;
+                axios.put(url, this.fornecedorAlterar).then(function(r){
+                    vm.erros = [];
+                }).catch(function (error) {
+                        vm.erros = error.response.data.errors;
+                        vm.fornecedores = [];
+                }).finally(function () {
+                    
+                });
+            },
+            descartarAlteracoesFornecedor(){
+                this.fornecedores = [];
+                this.getFornecedor();
             }
         }
     }
@@ -181,7 +225,7 @@
           fornecedores: [],
           erros:[],
           idExclusao: "",
-          fornecedorAlterar: "",
+          fornecedorAlterar: {},
         }
     });
 </script>
