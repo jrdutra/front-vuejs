@@ -4,11 +4,15 @@
         <!-- Conteúdo do Menu --> 
             <ul class="nav flex-column">
                 <li class="nav-item">
+                    <a class="nav-link" href="index.php?pst=empresa&arq=screenempresa">Empresa</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="index.php?pst=fornecedor&arq=screenfornecedor">Fornecedor</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="index.php?pst=empresa&arq=screenempresa">Empresa</a>
+                    <a class="nav-link" href="index.php?pst=cliente&arq=screencliente">Cliente</a>
                 </li>
+                
             </ul>
         </div>
     </div>
