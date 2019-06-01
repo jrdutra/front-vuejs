@@ -63,28 +63,6 @@
                             <strong>E-mail:</strong>
                             {{empresa.email}}
                         </p>
-                        <p class="card-text">
-                            <!-- Empregados -->
-                            <div class="accordion" id="accordionExample">
-                                <div class="card">
-                                    <div class="card-header" id="headingOne">
-                                        <h4 class="mb-0">
-                                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                                <strong>Empregados:</strong>
-                                            </button>
-                                        </h4>
-                                    </div>
-                                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-                                        <ul class="list-group list-group-flush" v-for="empregado in empresa.empregados">
-                                            <li class="list-group-item">{{empregado.nome}}</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="card">
-                                </div>
-                            </div>
-
-                        </p>
                         <a v-on:click="idExclusao=empresa.id" data-toggle="modal" data-target="#modalExcluir" class="btn btn-danger text-white">Excluir</a>
                         <a v-on:click="alterarEmpresa(empresa)" class="btn btn-primary  text-white" data-toggle="modal" data-target="#modalAlterar">Alterar</a>
                     </div>

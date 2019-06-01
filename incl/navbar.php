@@ -7,6 +7,9 @@
                     <a class="nav-link" href="index.php?pst=empresa&arq=screenempresa">Empresa</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="index.php?pst=empregado&arq=screenempregado">Empregado</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="index.php?pst=fornecedor&arq=screenfornecedor">Fornecedor</a>
                 </li>
                 <li class="nav-item">
