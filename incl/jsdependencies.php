@@ -4,5 +4,5 @@
 <script src="js/popper.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script>
-    var host = "192.168.0.14";
+    var host = "localhost";
 </script>
