@@ -1,5 +1,5 @@
 
-<div id="appBuscarEmpresa"> 
+<div id="appBuscarEmpregado"> 
     <!-- 
         ==============================
         Todos os compontentes da busca 
@@ -9,9 +9,9 @@
         <div class="row mt-4">
                 <div class="col">
                     <div class="input-group mb-3">
-                        <input v-on:input="getEmpresa()" v-model="txtBusca" type="text" class="form-control" placeholder="Nome da empresa" aria-label="Nome da empresa" aria-describedby="button-addon">
+                        <input v-on:input="getEmpregado()" v-model="txtBusca" type="text" class="form-control" placeholder="Nome do empregado" aria-label="Nome do empregado" aria-describedby="button-addon">
                         <div class="input-group-append">
-                            <button v-on:click.stop.prevent="getEmpresa()" class="btn btn-outline-secondary" type="button" id="button-addon">Buscar</button>
+                            <button v-on:click.stop.prevent="getEmpregado()" class="btn btn-outline-secondary" type="button" id="button-addon">Buscar</button>
                         </div>
                     </div>
                 </div>
@@ -27,44 +27,48 @@
                 </div>
             </div>
         </div>
+        <div v-for="s in sucessos" class="row mt-4">
+            <div class="col">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Sucesso:</strong>
+                    {{s}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <transition-group name="list" class="col" tag="div">
-                <div v-for="empresa in empresas" v-bind:key="empresa.id" class="card mt-4">
+                <div v-for="empregado in empregados" v-bind:key="empregado.id" class="card mt-4">
                     <div class="card-header">
-                        {{empresa.nomeFantasia}}
+                        {{empregado.nome}}
                     </div>
                     <div class="card-body">
-                        <h5 class="card-title">Dados da empresa:</h5>
+                        <h5 class="card-title">Dados do empregado:</h5>
                         <p class="card-text">
-                            <strong>Razao Social:</strong>
-                            {{empresa.razaoSocial}}
+                            <strong>Nome:</strong>
+                            {{empregado.nome}}
                         </p>
                         <p class="card-text">
-                            <strong>CNPJ:</strong>
-                            {{empresa.cnpj}}
+                            <strong>CPF:</strong>
+                            {{empregado.cpf}}
                         </p>
                         <p class="card-text">
-                            <strong>Logradouro:</strong>
-                            {{empresa.logradouro}}
+                            <strong>Telefone:</strong>
+                            {{empregado.telefone}}
                         </p>
                         <p class="card-text">
-                            <strong>Bairro:</strong>
-                            {{empresa.bairro}}
+                            <strong>Funcao:</strong>
+                            {{empregado.funcao}}
                         </p>
                         <p class="card-text">
-                            <strong>Cidade:</strong>
-                            {{empresa.cidade}}
+                            <strong>Empresa:</strong>
+                            {{empregado.empresaNomeFantasia}}
                         </p>
-                        <p class="card-text">
-                            <strong>Estado:</strong>
-                            {{empresa.estado}}
-                        </p>
-                        <p class="card-text">
-                            <strong>E-mail:</strong>
-                            {{empresa.email}}
-                        </p>
-                        <a v-on:click="idExclusao=empresa.id" data-toggle="modal" data-target="#modalExcluir" class="btn btn-danger text-white">Excluir</a>
-                        <a v-on:click="alterarEmpresa(empresa)" class="btn btn-primary  text-white" data-toggle="modal" data-target="#modalAlterar">Alterar</a>
+
+                        <a v-on:click="idExclusao=empregado.id" data-toggle="modal" data-target="#modalExcluir" class="btn btn-danger text-white">Excluir</a>
+                        <a v-on:click="alterarEmpregado(empregado)" class="btn btn-primary  text-white" data-toggle="modal" data-target="#modalAlterar">Alterar</a>
                     </div>
                 </div>  
             </transition-group>
@@ -94,7 +98,7 @@
                     </div>
                     <div class="modal-footer">
                         <button v-on:click="idExclusao=''" type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button v-on:click="deleteEmpresa(idExclusao)" type="button" class="btn btn-success" data-dismiss="modal">Confirmar</button>
+                        <button v-on:click="deleteEmpregado(idExclusao)" type="button" class="btn btn-success" data-dismiss="modal">Confirmar</button>
                     </div>
                 </div>
             </div>
@@ -107,88 +111,76 @@
 
         <!-- 
             =========================
-            Modal Alterar Empresa
+            Modal Alterar Empregado
             =========================
         -->
         <div class="modal fade" id="modalAlterar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Alterar empresa</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Alterar empregado</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <!-- INPUT Nome Fantasia-->
+                        <!-- INPUT Nome-->
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="idlblnome">Nome Fantasia</span>
+                                <span class="input-group-text" id="idlblnome">Nome</span>
                             </div>
-                                <input v-model="empresaAlterar.nomeFantasia" type="text" class="form-control" id="idtxtNome" aria-describedby="basic-addon3">
+                                <input v-model="empregadoAlterar.nome" type="text" class="form-control" id="idtxtNome" aria-describedby="basic-addon3">
                         </div>
-                         <!-- INPUT Razao Social-->
-                         <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="idlblrazaosocial">Razao Social</span>
-                            </div>
-                                <input v-model="empresaAlterar.razaoSocial" type="text" class="form-control" id="idtxtrazaosocial" aria-describedby="basic-addon3">
-                        </div>
-                        <!-- INPUT CNPJ-->
+                         
+                        <!-- INPUT CPF-->
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="idlblcnpj">CNPJ</span>
+                                <span class="input-group-text" id="idlblcpf">CPF</span>
                             </div>
-                                <input v-model="empresaAlterar.cnpj" type="text" class="form-control" id="idtxtcnpj" aria-describedby="basic-addon3">
+                                <input v-model="empregadoAlterar.cpf" type="text" class="form-control" id="idtxtcpf" aria-describedby="basic-addon3">
                         </div>
-                        <!-- INPUT logradouro-->
+                        <!-- INPUT telefone-->
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="idlbllogradouro">Logradouro</span>
+                                <span class="input-group-text" id="idlbltelefone">Telefone</span>
                             </div>
-                                <input v-model="empresaAlterar.logradouro" type="text" class="form-control" id="idtxtlogradouro" aria-describedby="basic-addon3">
+                                <input v-model="empregadoAlterar.telefone" type="text" class="form-control" id="idtxttelefone" aria-describedby="basic-addon3">
                         </div>
-                        <!-- INPUT Bairro-->
+                        <!-- INPUT Funcao-->
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="idlblbairro">Bairro</span>
+                                <span class="input-group-text" id="idlblfuncao">Função</span>
                             </div>
-                                <input v-model="empresaAlterar.bairro" type="text" class="form-control" id="idtxtbairro" aria-describedby="basic-addon3">
+                                <input v-model="empregadoAlterar.funcao" type="text" class="form-control" id="idtxtfuncao" aria-describedby="basic-addon3">
                         </div>
-                        <!-- INPUT cidade-->
+                        <!-- INPUT Empresa-->
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="idlblcidade">Cidade</span>
+                                <span class="input-group-text" id="idlblEmpresa">Empresa</span>
+                                <span class="input-group-text">{{empresaSelecionada.nomeFantasia}}</span>
                             </div>
-                                <input v-model="empresaAlterar.cidade" type="text" class="form-control" id="idtxtcidade" aria-describedby="basic-addon3">
+                            <input v-on:input="getEmpresa()" v-model="txtBuscaEmpresa" type="text" class="form-control" id="idtxtempresa" aria-describedby="basic-addon3">
                         </div>
-                        <!-- INPUT estado-->
                         <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="idlblestado">Estado</span>
+                            <div class="col">
+                                <transition-group name="list" class="col" tag="div">
+                                    <ul v-for="empresa in empresasBuscadas" v-bind:key="empresa.id" class="list-group mb-1">
+                                        <li v-on:click="selecionaEmpresa(empresa)" class="list-group-item list-group-item-action ml-2">{{empresa.nomeFantasia}}</li>
+                                    </ul>
+                                </transition-group>
                             </div>
-                                <input v-model="empresaAlterar.estado" type="text" class="form-control" id="idtxtestado" aria-describedby="basic-addon3">
                         </div>
-                        <!-- INPUT email-->
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="idlblemail">Email</span>
-                            </div>
-                                <input v-model="empresaAlterar.email" type="text" class="form-control" id="idtxtemail" aria-describedby="basic-addon3">
-                        </div>
-                        
-                        
                     </div>
                     <div class="modal-footer">
-                        <button v-on:click="descartarAlteracoesEmpresa()" type="button" class="btn btn-secondary" data-dismiss="modal">Descartar</button>
-                        <button v-on:click="salvarAlteracaoEmpresa()" type="button" class="btn btn-success" data-dismiss="modal">Salvar Alterações</button>
+                        <button v-on:click="descartarAlteracoesEmpregado()" type="button" class="btn btn-secondary" data-dismiss="modal">Descartar</button>
+                        <button v-on:click="salvarAlteracaoEmpregado()" type="button" class="btn btn-success" data-dismiss="modal">Salvar Alterações</button>
                     </div>
                 </div>
             </div>
         </div>
         <!-- 
         ==============================
-         Fim Modal Alterar empresa
+         Fim Modal Alterar empregado
         ==============================
         -->
 </div>
@@ -200,77 +192,133 @@
 <script>
     var mixin = {
         methods: {
-            getEmpresa(){
+            getEmpregado(){
                 var vm = this;
-                var url = 'http://' + host + ':8089/api/empresa/buscarnomefantasia/' + this.txtBusca;
+                var url = 'http://' + host + ':8089/api/empregado/buscarnome/' + this.txtBusca;
                 if(this.txtBusca!=''){
                     axios.get(url).then(function(r){
-                        vm.empresas =[];
-                        vm.empresas = r.data.data;
+                        vm.empregados =[];
+                        vm.empregados = r.data.data;
                         vm.erros = [];
+                        vm.sucessos = [];
                     }).catch(function (error) {
                         vm.erros = error.response.data.errors;
-                        vm.empresas = [];
+                        vm.empregados = [];
                         console.log(error.response.data.errors);
                     }).finally(function () {
                         
                     });
                 }else{
-                    vm.empresas=[];
+                    vm.empregados=[];
+                    vm.sucessos=[];
                 }
             },
-            deleteEmpresa(id){
+            deleteEmpregado(id){
                 var vm = this;
-                var url = 'http://' + host + ':8089/api/empresa/remover/' + id;
+                var url = 'http://' + host + ':8089/api/empregado/remover/' + id;
                 axios.delete(url).then(function(r){
-                    vm.empresas = vm.deleteEmpresaVetorId(vm.empresas);
+                    vm.empregados = vm.deleteEmpregadoVetorId(vm.empregados);
                     vm.erros = [];
                 }).catch(function (error) {
                         vm.erros = error.response.data.errors;
-                        vm.empresas = [];
+                        vm.empregados = [];
                         
                 }).finally(function () {
                     
                 });
             },
-            deleteEmpresaVetorId(arr){
+            deleteEmpregadoVetorId(arr){
                 var vm = this;
                 arr = arr.filter(function(obj) {
                     return obj.id !== vm.idExclusao;
                 });
                 return arr;
             },
-            alterarEmpresa(f){
-                this.empresaAlterar = f;
-                this.empresaAlterarAux = f;
+            alterarEmpregado(f){
+                this.empregadoAlterar = f;
+                this.empregadoAlterarAux = f;
+                this.empresaSelecionada.id = f.empresaId;
+                this.empresaSelecionada.nomeFantasia = f.empresaNomeFantasia;
             },
-            salvarAlteracaoEmpresa(){
+            salvarAlteracaoEmpregado(){
                 var vm = this;
-                var url = 'http://' + host + ':8089/api/empresa/atualizar/' + this.empresaAlterar.id;
-                axios.put(url, this.empresaAlterar).then(function(r){
+                var emp = {
+                    id: this.empregadoAlterar.id,
+                    nome: this.empregadoAlterar.nome,
+                    cpf: this.empregadoAlterar.cpf,
+                    telefone: this.empregadoAlterar.telefone,
+                    funcao: this.empregadoAlterar.funcao,
+                    empresa: {
+                        id: this.empresaSelecionada.id
+                    }
+                };
+                
+                var url = 'http://' + host + ':8089/api/empregado/atualizar/' + emp.id;
+                axios.put(url, emp).then(function(r){
                     vm.erros = [];
+                    vm.empregados = [];
+                    vm.sucessos = ["Empregado alterado com sucesso!"];
                 }).catch(function (error) {
                         vm.erros = error.response.data.errors;
-                        vm.empresas = [];
+                        vm.empregados = [];
                 }).finally(function () {
                     
                 });
             },
-            descartarAlteracoesEmpresa(){
-                this.empresas = [];
-                this.getEmpresa();
+            descartarAlteracoesEmpregado(){
+                this.empregados = [];
+                this.getEmpregado();
+                this.txtBuscaEmpresa = "";
+                this.empresasBuscadas=[];
+                this.sucessos=[];
+            },
+            getEmpresa(){
+                var vm = this;
+                var url = 'http://' + host + ':8089/api/empresa/buscarnomefantasia/' + this.txtBuscaEmpresa;
+                if(this.txtBuscaEmpresa!=''){
+                    axios.get(url).then(function(r){
+                        vm.empresasBuscadas =[];
+                        vm.empresasBuscadas = r.data.data;
+                        vm.erros = [];
+                    }).catch(function (error) {
+                        vm.erros = error.response.data.errors;
+                        vm.empresasBuscadas = [];
+                        console.log(error.response.data.errors);
+                    }).finally(function () {
+                        
+                    });
+                }else{
+                    vm.empresasBuscadas=[];
+                }
+            },
+            selecionaEmpresa(e){
+                this.empresaSelecionada = e;
+                this.txtBuscaEmpresa = "";
+                this.empresasBuscadas=[];
+                
             }
         }
     }
-    var appBuscarEmpresa = new Vue({
-        el: "#appBuscarEmpresa",
+    var appBuscarEmpregado = new Vue({
+        el: "#appBuscarEmpregado",
         mixins: [mixin],
         data: {
           txtBusca: "",
-          empresas: [],
+          empregados: [],
           erros:[],
+          sucessos:[],
           idExclusao: "",
-          empresaAlterar: {},
+          empregadoAlterar: {
+              id:"",
+              nome: "",
+              cpf: "",
+              telefone: "",
+              funcao: "",
+              empresa:{id:""},
+          },
+          empresasBuscadas:[],
+          txtBuscaEmpresa: "",
+          empresaSelecionada: {},
         }
     });
 </script>

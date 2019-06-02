@@ -1,4 +1,3 @@
-
 <div id="appBuscarEmpresa"> 
     <!-- 
         ==============================
@@ -76,7 +75,7 @@
                                     </div>
                                     <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                                         <ul class="list-group list-group-flush" v-for="empregado in empresa.empregados">
-                                            <li class="list-group-item">{{empregado.nome}}</li>
+                                            <li class="list-group-item">{{empregado.nome}} - {{empregado.funcao}}</li>
                                         </ul>
                                     </div>
                                 </div>
